@@ -1,0 +1,17 @@
+[
+    {
+        "views": 16,
+        "urls": 3,
+        "traffic": 187990,
+        "crawlers": {
+            "Google": 2,
+            "Bing": 0,
+            "Baidu": 0,
+            "Yandex": 0
+        },
+        "statusCode": {
+            "200": 14,
+            "301": 2
+        }
+    }
+]
