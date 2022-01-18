@@ -9,33 +9,33 @@ $baidu=0;
 $score = 0;
 $score2 = 0;
 $count=array();
-$urlcount=0;
+$urlcount=1;
 $traffic=0;
-$views=1;
+$views=0;
 $url=array();
-for($i=0;$i<!feof($handle);$i++)
-{
-    $dd = fgets($handle); 
+
+    /*$dd = fgets($handle); 
     $parts = explode('"', $dd);
-    $url[$i]=$parts[3];
     if (hasType($parts[1], 'POST'))
     { 
         $traffic=$traffic+intval(substr($parts[2], 4));
     }
-    $score++;
-}
+    $score++; */
 
-while (!feof($handle)) {
 
-    $dd = fgets($handle); 
+
+
+//while (!feof($handle)) {
+
+for ($i=0;$i<count(file($access_log)); $i++) {
+
+    $dd = fgets($handle);
     $parts = explode('"', $dd);
-    if($url[0]<>$parts[3])
-    {
-        $urlcount++;
-        $url[0]=$parts[3];
-    }
+    $url[$i] = $parts[3]; // URL
     $count=array(intval($parts[0]));
-    $views=$views+count($count);
+    $views++;
+
+
     
     if (hasType($parts[5], 'Google')) $google++;
     if (hasType($parts[5], 'Bing')) $bing++;
@@ -47,8 +47,16 @@ while (!feof($handle)) {
     {
         $traffic=$traffic+intval(substr($parts[2], 4));
     }
+
+ 
     
 }
+
+print_r($url);
+$urlcount = count($url);
+
+
+
 $arr = array (
     'views'=>$views,'urls'=>$urlcount,'traffic'=>$traffic,'crawlers'=>array("Google"=>$google,"Bing"=>$bing,"Baidu"=>$baidu,"Yandex"=>$yandex),'statusCode'=>array("200"=>$score,"301"=>$score2));
 
