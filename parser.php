@@ -14,20 +14,9 @@ $traffic=0;
 $views=0;
 $url=array();
 
-    /*$dd = fgets($handle); 
-    $parts = explode('"', $dd);
-    if (hasType($parts[1], 'POST'))
-    { 
-        $traffic=$traffic+intval(substr($parts[2], 4));
-    }
-    $score++; */
+// Цикл построчного парсинга файла
 
-
-
-
-//while (!feof($handle)) {
-
-for ($i=0;$i<count(file($access_log)); $i++) {
+for ($i=0;$i<count(file($access_log)); $i++) { 
 
     $dd = fgets($handle);
     $parts = explode('"', $dd);
@@ -48,17 +37,16 @@ for ($i=0;$i<count(file($access_log)); $i++) {
         $traffic=$traffic+intval(substr($parts[2], 4));
     }
 
- 
-    
+     
 }
 
-print_r($url);
-$urlcount = count($url);
+$url = array_unique($url); // удаление совпадающих URL
+$urlcount = count($url); // подсчет URL
 
 
 
 $arr = array (
-    'views'=>$views,'urls'=>$urlcount,'traffic'=>$traffic,'crawlers'=>array("Google"=>$google,"Bing"=>$bing,"Baidu"=>$baidu,"Yandex"=>$yandex),'statusCode'=>array("200"=>$score,"301"=>$score2));
+    'views'=>$views,'urls'=>$urlcount,'traffic'=>$traffic,'crawlers'=>array("Google"=>$google,"Bing"=>$bing,"Baidu"=>$baidu,"Yandex"=>$yandex),'statusCode'=>array("200"=>$score,"301"=>$score2)); 
 
 echo json_encode($arr,JSON_PRETTY_PRINT);
 
